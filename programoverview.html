@@ -1,237 +1,26 @@
-<?php
-// Connect to the database
-$con = mysqli_connect('srv1328.hstgr.io', 'u629694569_vcpkacin_web', 'Kakatiya@1243', 'u629694569_vcpkacin_web');
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-$department = isset($_GET['department']) ? $_GET['department'] : 'CSE'; // Default to 'CSE'
-
-// Fetch data for the selected department
-$query = "SELECT sno, department,department_name, description, status, vision, mission, peo, po_pso, advisory_board 
-          FROM dep_about WHERE department_name = ?";
-$stmt = $con->prepare($query);
-$stmt->bind_param("s", $department);
-$stmt->execute();
-$result = $stmt->get_result();
-
-// Initialize variables
-$department =$department_name = $vision = $mission = $description = $peo = $popso = $advisory = "";
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $department = $row['department'];
-    $department_name = $row['department_name'];
-    $vision = htmlspecialchars_decode($row['vision']);
-    $mission = htmlspecialchars_decode($row['mission']);
-    $description = htmlspecialchars_decode($row['description']);
-    $peo = htmlspecialchars_decode($row['peo']);
-    $popso = htmlspecialchars_decode($row['po_pso']);
-    $advisory = htmlspecialchars_decode($row['advisory_board']);
- 
-}
-
-$stmt->close();
-mysqli_close($con);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- blank.html  Tue, 07 Jan 2020 03:35:42 GMT -->
 <head>
-   
-    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-<title>VAAGESWARI COLLEG OF ENGINEERING</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<title>Care Diabetes  &mdash; Centre</title>
 
 <!-- General CSS Files -->
-<link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/modules/fontawesome/css/all.min.css">
 
 <!-- CSS Libraries -->
-<link rel="stylesheet" href="assets/modules/jqvmap/dist/jqvmap.min.css">
-<link rel="stylesheet" href="assets/modules/summernote/summernote-bs4.css">
-<link rel="stylesheet" href="assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css">
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <!-- Template CSS -->
 <link rel="stylesheet" href="assets/css/style.min.css">
 <link rel="stylesheet" href="assets/css/components.min.css">
-<style>
-    a{
-        text-decoration: none;
-        color: black;
-        font-size: large;
-    }
-    /* .sidebar-menu .submenu {
-    display: none; 
-    list-style-type: none;
-    padding-left: 20px;
-}
-
-.sidebar-menu .dropdown > a .arrow {
-    margin-left: auto; 
-    transition: transform 0.3s ease; 
-}
-
-.sidebar-menu .dropdown.open > a .arrow {
-    transform: rotate(180deg); 
-} */
-
-/* Show submenu on hover (or you can toggle it with JS) */
-/* .sidebar-menu .dropdown:hover .submenu {
-    display: block; 
-} */
-
-.sidebar-menu .submenu {
-    display: none; /* Initially hide submenus */
-    list-style-type: none;
-    padding-left: 20px; /* Optional: add indentation for subitems */
-    max-height: 0; /* Start with 0 height for smooth transition */
-    overflow: hidden; /* Hide content that exceeds the max height */
-    transition: max-height 0.3s ease-out; /* Smooth transition for height */
-}
-
-.sidebar-menu .dropdown.open .submenu {
-    display: block; /* Make submenu visible when it's open */
-    max-height: 500px; /* Allow submenu to expand up to a certain height */
-}
-
-.sidebar-menu .dropdown > a .arrow {
-    margin-left: auto; /* Push the arrow to the right */
-    transition: transform 0.3s ease; /* Smooth transition for arrow rotation */
-}
-
-.sidebar-menu .dropdown.open > a .arrow {
-    transform: rotate(180deg); /* Rotate arrow when dropdown is open */
-}
 
 
-</style>
-    <style>
-    /* General styles for the body and layout */
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-h1 {
-    color: #333;
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-form {
-    background-color: #F0EFF1 !important;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    margin: 0 auto;
-}
-
-label {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    display: block;
-}
-
-textarea {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1.1rem;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Styling for the form layout */
-form input[type="text"],
-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-textarea:focus,
-input:focus {
-    border-color: #4CAF50;
-    outline: none;
-}
-
-label {
-    display: block;
-    font-size: 1rem;
-    text-align: center;
-    background-color: orange;
-    margin-bottom: 2px;
-    font-weight: bold;
-    font-size: 35px;
-    line-height: 43px;
-   
-    
-}
-
-button[type="submit"] {
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
-    text-align: center;
-}
-
-button[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-/* Style for the form container */
-form {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    width: 60%;
-    margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-h1{
-    text-align: center;
-}
-.navbar {
-  overflow: hidden;
-  /* background-color: #ffffff;*/
-  position: fixed; 
-  top: 0;
-  width: 100%;
-  left : 0px !important;
-}
-.section{
-    z-index: 0.9 !important;
-}
-</style>
 </head>
+
 <body class="layout-4">
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
@@ -258,10 +47,11 @@ h1{
             <ul class="navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                  
+                    <!-- <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1"> -->
                     <div class="d-sm-none d-lg-inline-block">Admin</div></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="profile.html" class="dropdown-item has-icon text-primary" ><i class="fa-solid fa-user"></i> My Profile</a>
+                       
                         <a href="#" class="dropdown-item has-icon text-danger" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </li>
@@ -282,10 +72,10 @@ h1{
                         <a href="index.html"><i class="fa-solid fa-border-all"></i><span>Dashboard</span></a>
                         
                     </li>
-                    <!-- <li class="dropdown">
-                        <a href="patient-education.html"><i class="fa-regular fa-id-card"></i><span>Patient Education</span></a>
+                    <li class="dropdown">
+                        <a href="programoverview.html"><i class="fa-regular fa-id-card"></i><span>programoverview</span></a>
                         
-                    </li> -->
+                    </li>
                     <!-- <li class="dropdown"><a class="nav-link" href="testimonials.html"><i class="fa-solid fa-comment"></i><span>Patient Testimonials</span></a></li> -->
                 <!-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                     <a href="https://getcodiepie.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split"><i class="fas fa-rocket"></i> Documentation</a>
@@ -321,15 +111,11 @@ h1{
                 </li> -->
                 <!-- dynamic displaying the branches -->
                 <li class="dropdown">
-                    <a href="programoverview.html"><i class="fa-regular fa-id-card"></i><span>programoverview</span></a>
-                    
-                </li>
-                <li class="dropdown">
                     <a class="nav-link"><i class="fa-solid fa-eye-low-vision"></i> <span>Program Overview</span><i class="fa-solid fa-chevron-down arrow"></i></a>
                     <ul class="submenu">
                         <li><a href="about.php?department=EEE" style="padding-left: 0px;"><i class="fa-solid fa-binoculars"></i><span>EEE</span></a></li>
                         <li><a href="about.php?department=ECE" style="padding-left: 0px;"><i class="fa-solid fa-bullseye"></i><span>ECE</span></a></li>
-                        <li><a href="about.php?department=CIV" style="padding-left: 0px;"><i class="fa-brands fa-nfc-symbol"></i><span>CIV</span></a></li>
+                        <li><a href="about.php?department=CVI" style="padding-left: 0px;"><i class="fa-brands fa-nfc-symbol"></i><span>CVI</span></a></li>
                         <li><a href="about.php?department=MEC" style="padding-left: 0px;"><i class="fa-brands fa-nfc-directional"></i><span>MEC</span></a></li>
                         <li><a href="about.php?department=CSE" style="padding-left: 0px;"><i class="fa-solid fa-building-columns"></i><span>CSE</span></a></li>
                         <li><a href="about.php?department=AI_ML" style="padding-left: 0px;"><i class="fa-solid fa-people-roof"></i><span>AI&ML</span></a></li>
@@ -389,156 +175,69 @@ h1{
                 </li>
             </ul>
             </aside>
-        </div>  
+        </div>
 
         <!-- Start app main Content -->
         <div class="main-content">
             <section class="section">
-            <h1>Update Department Details of <?php echo htmlspecialchars($department_name); ?></h1>
-    <form action="update_dep_about.php?department=<?php echo urlencode($department_name); ?>" method="POST">
-        <label for="description">Description:</label><br>
-        <textarea name="description" id="description"><?php echo $description; ?></textarea><br><br>
+                <!-- <div class="section-header">
+                    <h1>Blank Page</h1>
+                </div> -->
 
-        <label for="vision">Vision:</label><br>
-        <textarea name="vision" id="vision"><?php echo $vision; ?></textarea><br><br>
-
-        <label for="mission">Mission:</label><br>
-        <textarea name="mission" id="mission"><?php echo $mission; ?></textarea><br><br>
-
-        <label for="peo">Program Educational Objectives (PEO):</label><br>
-        <textarea name="peo" id="peo"><?php echo $peo; ?></textarea><br><br>
-
-        <label for="popso">Program Outcomes (PO) & Program Specific Outcomes (PSO):</label><br>
-        <textarea name="popso" id="popso"><?php echo $popso; ?></textarea><br><br>
-
-        <label for="advisory">Advisory Board:</label><br>
-        <textarea name="advisory" id="advisory"><?php echo $advisory; ?></textarea><br><br>
-        <input type="hidden" name="<?php echo $department_name; ?>" id="<?php echo $department_name; ?>" value="<?php echo $department_name; ?>">
-        <button type="submit">Update</button>
-    </form>
+                <div class="section-body">
+                    <iframe src="about.php" width="90%" height="800px"></iframe>
+                </div>
             </section>
         </div>
 
         <!-- Start app Footer part -->
         <footer class="main-footer">
             <div class="footer-left">
-                 <div class="bullet"></div>  <a href="https://kakatiyasolutions.in/vageshwari_clg/" target="_blank">VAAGESWARI COLLEGE OF ENGINEERING</a>
+                 <div class="bullet"></div>  <a href="https://carediabetescentre.com/" target="_blank">care diabetes centre</a>
             </div>
             <div class="footer-right">
-                <div class="bullet"></div>Design & Developed By  <a href="https://kakatiyasolutions.com/" target="_blank">Kakatiya Slutions</a>
+                <div class="bullet"></div> Design & Developed By  <a href="https://kakatiyasolutions.com/" target="_blank">Kakatiya Slutions</a>
             </div>
         </footer>
     </div>
 </div>
-    <!-- <h1>Update Department Details</h1> -->
-    
-
-    <script>
-//     document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) {
-//     item.addEventListener('click', function(e) {
-//         var submenu = this.nextElementSibling;
-//         if (submenu && submenu.classList.contains('submenu')) {
-//             submenu.style.display = (submenu.style.display === 'block' ? 'none' : 'block');
-//         }
-//     });
-// });
-document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) {
-    item.addEventListener('click', function(e) {
-        // Toggle the 'open' class for the dropdown
-        var parentDropdown = this.parentElement;
-        parentDropdown.classList.toggle('open');
-        
-        // Toggle the display of the submenu
-        var submenu = this.nextElementSibling;
-        if (submenu && submenu.classList.contains('submenu')) {
-            submenu.style.display = (submenu.style.display === 'block' ? 'none' : 'block');
-        }
-    });
-});
 
 
+<script>
+    // Check if the user is logged in
+    if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+        // If not logged in, redirect to login page
+        window.location.href = 'login.html';
+    } else {
+        // Display the username from sessionStorage
+        document.getElementById('usernameDisplay').innerText = sessionStorage.getItem('username');
+    }
 </script>
-    <script src="assets/bundles/lib.vendor.bundle.js"></script>
+<script>
+    // debugger
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            // Remove login state from sessionStorage
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('username');
+            // Redirect to login page after logout
+            window.location.href = 'login.html';
+        });
+</script>
+
+<!-- General JS Scripts -->
+<script src="assets/bundles/lib.vendor.bundle.js"></script>
 <script src="js/CodiePie.js"></script>
 
 <!-- JS Libraies -->
-<script src="assets/modules/jquery.sparkline.min.js"></script>
-<script src="assets/modules/chart.min.js"></script>
-<script src="assets/modules/owlcarousel2/dist/owl.carousel.min.js"></script>
-<script src="assets/modules/summernote/summernote-bs4.js"></script>
-<script src="assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
 
 <!-- Page Specific JS File -->
-<script src="js/page/index.js"></script>
 
 <!-- Template JS File -->
 <script src="js/scripts.js"></script>
 <script src="js/custom.js"></script>
-<script>
-    const editorIds = ['description', 'vision', 'mission', 'peo', 'popso', 'advisory'];
-    editorIds.forEach(id => {
-        ClassicEditor.create(document.querySelector('#' + id), {
-            // toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable'],
-            toolbar: [
-                'bold', 
-                'italic', 
-                'link', 
-                'bulletedList', 
-                'numberedList', 
-                'blockQuote', 
-                'insertTable', 
-                'outdent', 
-                'indent', 
-                'todoList', // Adds task list support
-                'listStyle', // Allows for different list styles
-                'alignment', // Adds text alignment controls
-                'fontSize', // Allows changing the font size
-                'fontColor', // Custom text color options
-                'highlight', // Text highlighting option
-                'fontFamily', // Allows font family selection
-                'underline', // Underlines text
-                'strikethrough', // Strikes through text
-                'subscript', // Adds subscript formatting
-                'superscript', // Adds superscript formatting
-                'code', // Adds inline code formatting
-                'insertImage', // Image insertion support
-                'insertVideo', // Video embedding
-                'blockquote', // Blockquote option for citing sources
-                'clearFormatting', // Clears all text formatting
-            ],
-              
-              
-            table: {
-                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties'],
-                defaultProperties: {
-                    table: {
-                        classes: 'table table-bordered table-striped' // Set the desired default classes
-                    }
-                }
-            },
-            htmlSupport: {
-                allow: [
-                    { name: 'table', attributes: true, classes: true, styles: true },
-                    { name: 'thead', attributes: true, classes: true, styles: true },
-                    { name: 'tbody', attributes: true, classes: true, styles: true },
-                    { name: 'tr', attributes: true, classes: true, styles: true },
-                    { name: 'td', attributes: true, classes: true, styles: true },
-                    { name: 'th', attributes: true, classes: true, styles: true }
-                ],
-                disallow: [
-                {
-                    name: 'figure',
-                    attributes: true,
-                    classes: true,
-                    styles: true
-                }
-            ]
-            }
-        }).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
-    });
-</script>
 
 
 </body>
-</html>
 
+<!-- blank.html  Tue, 07 Jan 2020 03:35:42 GMT -->
+</html>

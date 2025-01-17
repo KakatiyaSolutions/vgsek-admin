@@ -5,6 +5,8 @@ if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$department = isset($_GET['department']);
+// $department_name = $_POST['department_name'];
 // Get updated values from the form
 $description = $_POST['description'];
 $vision = $_POST['vision'];
@@ -12,6 +14,7 @@ $mission = $_POST['mission'];
 $peo = $_POST['peo'];
 $popso = $_POST['popso'];
 $advisory = $_POST['advisory'];
+// $department_name = $_POST['department_name'];
 
 // Remove <figure> tags from the content
 $description = preg_replace('/<figure[^>]*>|<\/figure>/', '', $description);
@@ -62,7 +65,7 @@ $query = "UPDATE dep_about
               peo = '$peo', 
               po_pso = '$popso', 
               advisory_board = '$advisory' 
-          WHERE department_name = 'CSE'";
+          WHERE department_name = 'ECE'";
 
 if (mysqli_query($con, $query)) {
     echo "Record updated successfully.";
