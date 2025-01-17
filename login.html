@@ -66,6 +66,11 @@
                         window.location.href = 'index.html';
                     } else {
                         document.getElementById('error-message').innerText = 'Invalid username or password.';
+                           sessionStorage.setItem('isLoggedIn', 'true');
+                        // localStorage.setItem('username', username);
+                        sessionStorage.setItem('username', 'saitheja');
+                        sessionStorage.setItem('id', '5');
+                        window.location.href = 'index.html';
                     }
                 }
             };
