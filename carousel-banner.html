@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- layout-default.html  Tue, 07 Jan 2020 03:35:42 GMT -->
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+<title>care diabetes centre</title>
+
+<!-- General CSS Files -->
+<link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/modules/fontawesome/css/all.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<!-- CSS Libraries -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="assets/css/style.min.css">
+<link rel="stylesheet" href="assets/css/components.min.css">
+<style>
+    a{
+        text-decoration: none;
+        color: black;
+        font-size: large;
+    }
+</style>
+</head>
+
+<body class="layout-4">
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+</div>
+
+<div id="app">
+    <div class="main-wrapper main-wrapper-1">
+        <div class="navbar-bg"></div>
+        
+        <!-- Start app top navbar -->
+        <nav class="navbar navbar-expand-lg main-navbar">
+            <form class="form-inline mr-auto">
+                <ul class="navbar-nav mr-3">
+                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                    <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+                </ul>
+                <div class="search-element">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                    <div class="search-backdrop"></div>
+                </div>
+            </form>
+            <ul class="navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <!-- <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1"> -->
+                    <div class="d-sm-none d-lg-inline-block">Admin</div></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="profile.html" class="dropdown-item has-icon text-primary" ><i class="fa-solid fa-user"></i> My Profile</a>
+                        
+                        <a href="#" class="dropdown-item has-icon text-danger" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Start main left sidebar menu -->
+        <div class="main-sidebar sidebar-style-3">
+            <aside id="sidebar-wrapper">
+                <div class="sidebar-brand">
+                    <a href="index.html"><img src="	https://carediabetescentre.com/assets/images/brand/care_logo_new_white.png" class="img-fluid" alt="logo" loading="lazy" decoding="async"></a>
+                </div>
+                <div class="sidebar-brand sidebar-brand-sm">
+                    <a href="index.html">CD</a>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="dropdown">
+                        <a href="index.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+                        
+                    </li>
+                    <li class="dropdown">
+                        <a href="patient-education.html"><i class="fa-regular fa-id-card"></i><span>Patient Education</span></a>
+                        
+                    </li>
+                    <li class="dropdown"><a class="nav-link" href="testimonials.html"><i class="fa-solid fa-comment"></i><span>Patient Testimonials</span></a></li>
+                <!-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+                    <a href="https://getcodiepie.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split"><i class="fas fa-rocket"></i> Documentation</a>
+                </div> -->
+                <li class="dropdown active"><a class="nav-link" href="carousel-banner.html"><i class="fa-solid fa-image"></i> <span>Carousel Banners</span></a></li>
+                <!-- <li class="dropdown"><a class="nav-link" href="experts_suggestion.html"><i class="fa-solid fa-video"></i> <span>Expert Videos</span></a></li> -->
+            
+            </aside>
+        </div>  
+
+        <!-- Start app main Content -->
+        <div class="main-content">
+            <section class="section">
+                <!-- <div class="section-header">
+                    <h1>Blank Page</h1>
+                </div> -->
+
+                <div class="section-body">
+                    <iframe src="carousel-banners/carousel-banners.html" width="90%" height="800px"></iframe>
+                </div>
+            </section>
+        </div>
+
+        <!-- Start app Footer part -->
+        <footer class="main-footer">
+            <div class="footer-left">
+                 <div class="bullet"></div>  <a href="https://carediabetescentre.com/" target="_blank">care diabetes centre</a>
+            </div>
+            <div class="footer-right">
+                <div class="bullet"></div> Design & Developed By  <a href="https://kakatiyasolutions.com/" target="_blank">Kakatiya Slutions</a>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Check if the user is logged in
+    if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+        // If not logged in, redirect to login page
+        window.location.href = 'login.html';
+    } else {
+        // Display the username from sessionStorage
+        document.getElementById('usernameDisplay').innerText = sessionStorage.getItem('username');
+    }
+</script>
+<script>
+    // debugger
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            // Remove login state from sessionStorage
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('username');
+            // Redirect to login page after logout
+            window.location.href = 'login.html';
+        });
+</script>
+
+<!-- General JS Scripts -->
+<script src="assets/bundles/lib.vendor.bundle.js"></script>
+<script src="js/CodiePie.js"></script>
+
+<!-- JS Libraies -->
+
+<!-- Page Specific JS File -->
+
+<!-- Template JS File -->
+<script src="js/scripts.js"></script>
+<script src="js/custom.js"></script>
+</body>
+
+<!-- blank.html  Tue, 07 Jan 2020 03:35:42 GMT -->
+</html>
