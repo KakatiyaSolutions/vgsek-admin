@@ -1,5 +1,9 @@
 {
+    "name": "your-vendor/your-package-name",
+    "description": "A brief description of your package",
+    "type": "library",
+    "license": "proprietary",  // or another license like "MIT"
     "require": {
-        "phpmailer/phpmailer": "^6.9"
+        "php": "^7.4|^8.0"
     }
 }
