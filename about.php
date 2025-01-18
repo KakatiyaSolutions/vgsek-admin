@@ -42,7 +42,8 @@ mysqli_close($con);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   
+<!-- <script src="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
+<!-- <script src="js/ckeditor.js"></script> -->
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -487,6 +488,7 @@ h1{
                 <div class="bullet"></div>Design & Developed By  <a href="https://kakatiyasolutions.com/" target="_blank">Kakatiya Slutions</a>
             </div>
         </footer>
+    
     </div>
 </div>
     <!-- <h1>Update Department Details</h1> -->
@@ -533,7 +535,9 @@ document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) 
 <!-- Template JS File -->
 <script src="js/scripts.js"></script>
 <script src="js/custom.js"></script>
-// <script>
+<!-- <script src="js/ckeditor.js"></script> -->
+
+<!-- // <script>
 //     const editorIds = ['description', 'vision', 'mission', 'peo', 'popso', 'advisory', 'po','board_of_studies', 'achivements'];
 //     editorIds.forEach(id => {
 //         ClassicEditor.create(document.querySelector('#' + id), {
@@ -595,40 +599,48 @@ document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) 
 //             }
 //         }).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
 //     });
-// </script>
-// <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-<script>
-    const editorIds = ['description', 'vision', 'mission', 'peo', 'popso', 'advisory', 'po', 'board_of_studies', 'achivements'];
+// </script> -->
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script> -->
+<!-- <script src="my-ckeditor-porject/ckeditor/ckeditor.js"></script> -->
+<!-- <script src="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
+<!-- <script src="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
 
+
+<script>
+     console.log(window.ClassicEditor); 
+    const editorIds = 
+    ['description', 'vision', 'mission', 'peo', 'popso', 'advisory', 'po', 'board_of_studies', 'achivements'];
+    // const editorIds = ['selectAll', 'undo', 'redo', 'bold', 'italic', 'blockQuote', 'link', 'ckfinder', 'uploadImage', 'imageUpload', 'heading', 'imageTextAlternative', 'toggleImageCaption', 'imageStyle:inline', 'imageStyle:alignLeft', 'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:alignBlockLeft', 'imageStyle:alignBlockRight', 'imageStyle:block', 'imageStyle:side', 'imageStyle:wrapText', 'imageStyle:breakText', 'indent', 'outdent', 'numberedList', 'bulletedList', 'mediaEmbed', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells'];
     editorIds.forEach(id => {
         ClassicEditor.create(document.querySelector('#' + id), {
-            toolbar: [
-                'bold', 
-                'italic', 
-                'link', 
-                'bulletedList', 
-                'numberedList', 
-                'blockQuote', 
-                'insertTable', 
-                'outdent', 
-                'indent', 
-                'todoList', // Adds task list support
-                'listStyle', // Allows for different list styles
-                'alignment', // Adds text alignment controls
-                'fontSize', // Allows changing the font size
-                'fontColor', // Custom text color options
-                'highlight', // Text highlighting option
-                'fontFamily', // Allows font family selection
-                'underline', // Underlines text
-                'strikethrough', // Strikes through text
-                'subscript', // Adds subscript formatting
-                'superscript', // Adds superscript formatting
-                'code', // Adds inline code formatting
-                'insertImage', // Image insertion support
-                'insertVideo', // Video embedding
-                'blockquote', // Blockquote option for citing sources
-                'clearFormatting', // Clears all text formatting
-            ],
+            // toolbar: [
+            //     'bold', 
+            //     'italic', 
+            //     'link', 
+            //     'bulletedList', 
+            //     'numberedList', 
+            //     'blockQuote', 
+            //     'insertTable', 
+            //     'outdent', 
+            //     'indent', 
+            //     'todoList', // Adds task list support
+            //     'listStyle', // Allows for different list styles
+            //     'alignment', // Adds text alignment controls
+            //     'fontSize', // Allows changing the font size
+            //     'fontColor', // Custom text color options
+            //     'highlight', // Text highlighting option
+            //     'fontFamily', // Allows font family selection
+            //     'underline', // Underlines text
+            //     'strikethrough', // Strikes through text
+            //     'subscript', // Adds subscript formatting
+            //     'superscript', // Adds superscript formatting
+            //     'code', // Adds inline code formatting
+            //     'insertImage', // Image insertion support
+            //     'insertVideo', // Video embedding
+            //     'blockquote', // Blockquote option for citing sources
+            //     'clearFormatting', // Clears all text formatting
+            // ],
+            toolbar: ['selectAll', 'undo', 'redo', 'bold', 'italic', 'blockQuote', 'link', 'ckfinder', 'uploadImage', 'imageUpload', 'heading', 'imageTextAlternative', 'toggleImageCaption', 'imageStyle:inline', 'imageStyle:alignLeft', 'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:alignBlockLeft', 'imageStyle:alignBlockRight', 'imageStyle:block', 'imageStyle:side', 'imageStyle:wrapText', 'imageStyle:breakText', 'indent', 'outdent', 'numberedList', 'bulletedList', 'mediaEmbed', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells'],
 
             // Configure Font Plugin
             fontSize: {
@@ -669,7 +681,10 @@ document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) 
                     }
                 ]
             }
-        }).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
+        }).then(editor => {
+    // List all available component names in the editor's UI
+    // console.log(Array.from(editor.ui.componentFactory.names()));
+}).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
     });
 </script>
 
