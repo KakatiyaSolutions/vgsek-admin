@@ -4,11 +4,11 @@ $con = mysqli_connect('srv1328.hstgr.io', 'u629694569_vcpkacin_web', 'Kakatiya@1
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
-
+$active_department = isset($_GET['department']) ? $_GET['department'] : 'EEE';
 $department = isset($_GET['department']) ? $_GET['department'] : 'CSE'; // Default to 'CSE'
 
 // Fetch data for the selected department
-$query = "SELECT sno, department,department_name, description, status, vision, mission, peo, po_pso, advisory_board 
+$query = "SELECT sno, po, department,department_name, description, status, vision, mission, peo, po_pso,  advisory_board , achivements, board_of_studies
           FROM dep_about WHERE department_name = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("s", $department);
@@ -16,7 +16,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Initialize variables
-$department =$department_name = $vision = $mission = $description = $peo = $popso = $advisory = "";
+$department = $department_name = $vision = $mission = $description = $peo = $po = $popso = $board_of_studies = $achivements = $advisory = "";
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $department = $row['department'];
@@ -25,9 +25,14 @@ if ($result->num_rows > 0) {
     $mission = htmlspecialchars_decode($row['mission']);
     $description = htmlspecialchars_decode($row['description']);
     $peo = htmlspecialchars_decode($row['peo']);
+    $po = htmlspecialchars_decode($row['po']);
     $popso = htmlspecialchars_decode($row['po_pso']);
     $advisory = htmlspecialchars_decode($row['advisory_board']);
- 
+    // $board_of_studies = htmlspecialchars_decode($row['board_of_studies']);
+    // $achivements = htmlspecialchars_decode($row['achivements']);
+    $achivements = isset($row['achivements']) ? htmlspecialchars_decode($row['achivements']) : "";
+$board_of_studies = isset($row['board_of_studies']) ? htmlspecialchars_decode($row['board_of_studies']) : "";
+
 }
 
 $stmt->close();
@@ -64,6 +69,12 @@ mysqli_close($con);
         color: black;
         font-size: large;
     }
+    .active a {
+    font-weight: bold; /* Example: Make the text bold */
+    color:rgb(0, 0, 0) !important;   /* Example: Change the text color */
+    background-color: #f8f9fa; /* Example: Add a background color */
+}
+
     /* .sidebar-menu .submenu {
     display: none; 
     list-style-type: none;
@@ -230,6 +241,7 @@ h1{
 .section{
     z-index: 0.9 !important;
 }
+
 </style>
 </head>
 <body class="layout-4">
@@ -320,11 +332,8 @@ h1{
                     </ul>
                 </li> -->
                 <!-- dynamic displaying the branches -->
-                <li class="dropdown">
-                    <a href="programoverview.html"><i class="fa-regular fa-id-card"></i><span>programoverview</span></a>
-                    
-                </li>
-                <li class="dropdown">
+               
+                <!-- <li class="dropdown">
                     <a class="nav-link"><i class="fa-solid fa-eye-low-vision"></i> <span>Program Overview</span><i class="fa-solid fa-chevron-down arrow"></i></a>
                     <ul class="submenu">
                         <li><a href="about.php?department=EEE" style="padding-left: 0px;"><i class="fa-solid fa-binoculars"></i><span>EEE</span></a></li>
@@ -334,6 +343,46 @@ h1{
                         <li><a href="about.php?department=CSE" style="padding-left: 0px;"><i class="fa-solid fa-building-columns"></i><span>CSE</span></a></li>
                         <li><a href="about.php?department=AI_ML" style="padding-left: 0px;"><i class="fa-solid fa-people-roof"></i><span>AI&ML</span></a></li>
                         <li><a href="about.php?department=IT" style="padding-left: 0px;"><i class="fa-solid fa-trophy"></i><span>IT</span></a></li>
+                    </ul>
+                </li> -->
+                <li class="dropdown">
+                    <a class="nav-link"><i class="fa-solid fa-eye-low-vision"></i> <span>Program Overview</span><i class="fa-solid fa-chevron-down arrow"></i></a>
+                    <ul class="submenu">
+                        <li class="<?php echo ($active_department === 'EEE') ? 'active' : ''; ?>">
+                            <a href="about.php?department=EEE" style="padding-left: 0px;">
+                                <i class="fa-solid fa-binoculars"></i><span>EEE</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'ECE') ? 'active' : ''; ?>">
+                            <a href="about.php?department=ECE" style="padding-left: 0px;">
+                                <i class="fa-solid fa-bullseye"></i><span>ECE</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'CIV') ? 'active' : ''; ?>">
+                            <a href="about.php?department=CIV" style="padding-left: 0px;">
+                                <i class="fa-brands fa-nfc-symbol"></i><span>CIV</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'MEC') ? 'active' : ''; ?>">
+                            <a href="about.php?department=MEC" style="padding-left: 0px;">
+                                <i class="fa-brands fa-nfc-directional"></i><span>MEC</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'CSE') ? 'active' : ''; ?>">
+                            <a href="about.php?department=CSE" style="padding-left: 0px;">
+                                <i class="fa-solid fa-building-columns"></i><span>CSE</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'AI_ML') ? 'active' : ''; ?>">
+                            <a href="about.php?department=AI_ML" style="padding-left: 0px;">
+                                <i class="fa-solid fa-people-roof"></i><span>AI&ML</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'DS') ? 'active' : ''; ?>">
+                            <a href="about.php?department=DS" style="padding-left: 0px;">
+                                <i class="fa-solid fa-trophy"></i><span>DS</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 
@@ -408,13 +457,23 @@ h1{
         <label for="peo">Program Educational Objectives (PEO):</label><br>
         <textarea name="peo" id="peo"><?php echo $peo; ?></textarea><br><br>
 
-        <label for="popso">Program Outcomes (PO) & Program Specific Outcomes (PSO):</label><br>
+        <label for="po">Program Outcomes (PO) </label><br>
+        <textarea name="po" id="po"><?php echo $po; ?></textarea><br><br>
+
+        <label for="popso"> Program Specific Outcomes (PSO):</label><br>
         <textarea name="popso" id="popso"><?php echo $popso; ?></textarea><br><br>
 
+        <label for="board_of_studies">Board Of Studies:</label><br>
+        <textarea name="board_of_studies" id="board_of_studies"><?php echo $board_of_studies; ?></textarea><br><br>
+        
         <label for="advisory">Advisory Board:</label><br>
         <textarea name="advisory" id="advisory"><?php echo $advisory; ?></textarea><br><br>
+        
+        <label for="achivements">Achivements:</label><br>
+        <textarea name="achivements" id="achivements"><?php echo $achivements; ?></textarea><br><br>
+        
         <input type="hidden" name="<?php echo $department_name; ?>" id="<?php echo $department_name; ?>" value="<?php echo $department_name; ?>">
-        <button type="submit">Update</button>
+        <button type="submit" class="btnsubmi "  style="display: block; margin: 0 auto;">Update</button>
     </form>
             </section>
         </div>
@@ -474,11 +533,75 @@ document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) 
 <!-- Template JS File -->
 <script src="js/scripts.js"></script>
 <script src="js/custom.js"></script>
+// <script>
+//     const editorIds = ['description', 'vision', 'mission', 'peo', 'popso', 'advisory', 'po','board_of_studies', 'achivements'];
+//     editorIds.forEach(id => {
+//         ClassicEditor.create(document.querySelector('#' + id), {
+//             // toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable'],
+//             toolbar: [
+//                 'bold', 
+//                 'italic', 
+//                 'link', 
+//                 'bulletedList', 
+//                 'numberedList', 
+//                 'blockQuote', 
+//                 'insertTable', 
+//                 'outdent', 
+//                 'indent', 
+//                 'todoList', // Adds task list support
+//                 'listStyle', // Allows for different list styles
+//                 'alignment', // Adds text alignment controls
+//                 'fontSize', // Allows changing the font size
+//                 'fontColor', // Custom text color options
+//                 'highlight', // Text highlighting option
+//                 'fontFamily', // Allows font family selection
+//                 'underline', // Underlines text
+//                 'strikethrough', // Strikes through text
+//                 'subscript', // Adds subscript formatting
+//                 'superscript', // Adds superscript formatting
+//                 'code', // Adds inline code formatting
+//                 'insertImage', // Image insertion support
+//                 'insertVideo', // Video embedding
+//                 'blockquote', // Blockquote option for citing sources
+//                 'clearFormatting', // Clears all text formatting
+//             ],
+              
+              
+//             table: {
+//                 contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties'],
+//                 defaultProperties: {
+//                     table: {
+//                         classes: 'table table-bordered table-striped' // Set the desired default classes
+//                     }
+//                 }
+//             },
+//             htmlSupport: {
+//                 allow: [
+//                     { name: 'table', attributes: true, classes: true, styles: true },
+//                     { name: 'thead', attributes: true, classes: true, styles: true },
+//                     { name: 'tbody', attributes: true, classes: true, styles: true },
+//                     { name: 'tr', attributes: true, classes: true, styles: true },
+//                     { name: 'td', attributes: true, classes: true, styles: true },
+//                     { name: 'th', attributes: true, classes: true, styles: true }
+//                 ],
+//                 disallow: [
+//                 {
+//                     name: 'figure',
+//                     attributes: true,
+//                     classes: true,
+//                     styles: true
+//                 }
+//             ]
+//             }
+//         }).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
+//     });
+// </script>
+// <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 <script>
-    const editorIds = ['description', 'vision', 'mission', 'peo', 'popso', 'advisory'];
+    const editorIds = ['description', 'vision', 'mission', 'peo', 'popso', 'advisory', 'po', 'board_of_studies', 'achivements'];
+
     editorIds.forEach(id => {
         ClassicEditor.create(document.querySelector('#' + id), {
-            // toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable'],
             toolbar: [
                 'bold', 
                 'italic', 
@@ -506,8 +629,19 @@ document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) 
                 'blockquote', // Blockquote option for citing sources
                 'clearFormatting', // Clears all text formatting
             ],
-              
-              
+
+            // Configure Font Plugin
+            fontSize: {
+                options: [
+                    8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+                ]
+            },
+            fontFamily: {
+                options: [
+                    'default', 'Arial', 'Courier New', 'Georgia', 'Lucida Sans Unicode', 'Tahoma', 'Times New Roman', 'Verdana'
+                ]
+            },
+
             table: {
                 contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties'],
                 defaultProperties: {
@@ -516,6 +650,7 @@ document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) 
                     }
                 }
             },
+
             htmlSupport: {
                 allow: [
                     { name: 'table', attributes: true, classes: true, styles: true },
@@ -526,13 +661,13 @@ document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) 
                     { name: 'th', attributes: true, classes: true, styles: true }
                 ],
                 disallow: [
-                {
-                    name: 'figure',
-                    attributes: true,
-                    classes: true,
-                    styles: true
-                }
-            ]
+                    {
+                        name: 'figure',
+                        attributes: true,
+                        classes: true,
+                        styles: true
+                    }
+                ]
             }
         }).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
     });
