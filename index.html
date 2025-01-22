@@ -199,11 +199,48 @@
                  <li class="dropdown">
                     <a class="nav-link" ><i class="fa-solid fa-graduation-cap"></i> <span>M.Tech Courses</span><i class="fa-solid fa-chevron-down arrow"></i></a>
                     <ul class="submenu">
+                        <li class="<?php echo ($active_department === 'EEE') ? 'active' : ''; ?>">
+                            <a href="dep_mtech.php?department=EEE" style="padding-left: 0px;">
+                                <i class="fa-solid fa-binoculars"></i><span>EEE</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'ECE') ? 'active' : ''; ?>">
+                            <a href="dep_mtech.php?department=ECE" style="padding-left: 0px;">
+                                <i class="fa-solid fa-bullseye"></i><span>ECE</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'CIV') ? 'active' : ''; ?>">
+                            <a href="dep_mtech.php?department=CIV" style="padding-left: 0px;">
+                                <i class="fa-brands fa-nfc-symbol"></i><span>CIV</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'MEC') ? 'active' : ''; ?>">
+                            <a href="dep_mtech.php?department=MEC" style="padding-left: 0px;">
+                                <i class="fa-brands fa-nfc-directional"></i><span>MEC</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'CSE') ? 'active' : ''; ?>">
+                            <a href="dep_mtech.php?department=CSE" style="padding-left: 0px;">
+                                <i class="fa-solid fa-building-columns"></i><span>CSE</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'AI_ML') ? 'active' : ''; ?>">
+                            <a href="dep_mtech.php?department=AI_ML" style="padding-left: 0px;">
+                                <i class="fa-solid fa-people-roof"></i><span>AI&ML</span>
+                            </a>
+                        </li>
+                        <li class="<?php echo ($active_department === 'DS') ? 'active' : ''; ?>">
+                            <a href="dep_mtech.php?department=DS" style="padding-left: 0px;">
+                                <i class="fa-solid fa-trophy"></i><span>DS</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- <ul class="submenu">
                         <li><a href="#" style="padding-left: 0px;"><i class="fa-solid fa-book"></i><span>Syllabus</span></a></li>
                         <li><a href="#" style="padding-left: 0px;"><i class="fas fa-calendar-check"></i><span>Timetables</span></a></li>
                         <li><a href="#" style="padding-left: 0px;"><i class="fa-solid fa-calendar-days"></i><span>Academic Calendar</span></a></li>
                         <li><a href="#" style="padding-left: 0px;"><i class="fa-solid fa-flask-vial"></i><span>Laboratories</span></a></li>
-                    </ul>
+                    </ul> -->
                 </li>
 
                 <!-- Faculty profile -->

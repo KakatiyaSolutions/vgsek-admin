@@ -10,7 +10,7 @@ $department = isset($_GET['department']) ? $_GET['department'] : 'CSE'; // Defau
 // Fetch data for the selected department
 // $query = "SELECT sno, po, department,department_name, description, status, vision, mission, peo, po_pso,  advisory_board , achivements, board_of_studies
 //           FROM dep_about WHERE department_name = ?";
-$query = "SELECT id, branch_name, lab_name, configuration_details, course, number_of_systems, lab_details, lab_image, 	laboratories, syllabus, timetable, academic_calendar FROM dep_btech WHERE branch_name = ?";
+$query = "SELECT id, branch_name, lab_name, configuration_details, course, number_of_systems, lab_details, lab_image, 	laboratories, syllabus, timetable, academic_calendar FROM dep_mtech WHERE branch_name = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("s", $department);
 $stmt->execute();
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_lab']))
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $query = "SELECT * FROM dep_btech WHERE lab_name = ?";
+    $query = "SELECT * FROM dep_mtech WHERE lab_name = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("s", $selected_lab);
     $stmt->execute();
@@ -573,7 +573,7 @@ h1{
     <h1>Update B.Tech Details of <?php echo htmlspecialchars($branch_name); ?></h1>
 
     <!-- Dropdown Form -->
-    <form action="dep_btech.php?department=<?php echo urlencode($branch_name); ?>" method="POST">
+    <form action="dep_mtech.php?department=<?php echo urlencode($branch_name); ?>" method="POST">
         <label for="lab_dropdown">Select Lab:</label><br>
        
         <select name="selected_lab" id="lab_dropdown" onchange="this.form.submit()">
@@ -585,7 +585,7 @@ h1{
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $query = "SELECT lab_name FROM dep_btech WHERE branch_name = ?";
+    $query = "SELECT lab_name FROM dep_mtech WHERE branch_name = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("s", $branch_name);
     $stmt->execute();
@@ -608,7 +608,7 @@ h1{
 
     <!-- Update Form -->
    
-        <form action="update_dep_btech.php?id=<?php echo urlencode($id); ?>" method="POST">
+        <form action="update_dep_mtech.php?id=<?php echo urlencode($id); ?>" method="POST">
             <label for="id">Id:</label><br>
         <textarea name="id" id="id"><?php echo $id; ?></textarea><br><br>
             <label for="branch_name">Branch Name:</label><br>
@@ -655,7 +655,7 @@ h1{
 
 
             <h1>Update B.Tech Details of <?php echo htmlspecialchars($branch_name); ?></h1>
-    <form action="update_dep_btech.php?department=<?php echo urlencode($branch_name); ?>" method="POST">
+    <form action="update_dep_mtech.php?department=<?php echo urlencode($branch_name); ?>" method="POST">
 
     <label for="description">branch_name:</label><br>
     <textarea name="branch_name" id="branch_name"><?php echo $branch_name; ?></textarea><br><br>

@@ -104,7 +104,7 @@ $academic_calendar = mysqli_real_escape_string($con, $academic_calendar);
 
 
 // Update the database
-$query = "UPDATE dep_btech 
+$query = "UPDATE dep_mtech 
           SET configuration_details = '$configuration_details', 
               course = '$course', 
               laboratories = '$laboratories', 
