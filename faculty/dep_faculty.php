@@ -136,204 +136,9 @@ mysqli_close($con);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faculty Profiles</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-    <style>
-                            body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f4f4f9;
-                        margin: 0;
-                        padding: 0;
-                        color: #333;
-                    }
-
-                    h1 {
-                        text-align: center;
-                        margin-top: 30px;
-                        color: #2c3e50;
-                    }
-
-                    h2 {
-                        color: #34495e;
-                        font-size: 1.5em;
-                    }
-
-                    /* Upload Form Styling */
-                    .upload-form {
-                        max-width: 600px;
-                        margin: 20px auto;
-                        padding: 20px;
-                        background-color: #fff;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    }
-
-                    .upload-form label {
-                        display: block;
-                        font-size: 1.1em;
-                        margin-bottom: 5px;
-                        color: #555;
-                    }
-
-                    .upload-form input[type="text"],
-                    .upload-form select,
-                    .upload-form input[type="file"] {
-                        width: 100%;
-                        padding: 8px;
-                        margin: 10px 0 20px;
-                        border: 1px solid #ddd;
-                        border-radius: 4px;
-                        box-sizing: border-box;
-                        font-size: 1em;
-                    }
-
-                    .upload-form button {
-                        background-color: #3498db;
-                        color: white;
-                        padding: 12px 20px;
-                        border: none;
-                        border-radius: 4px;
-                        cursor: pointer;
-                        font-size: 1.2em;
-                        width: 100%;
-                    }
-
-                    .upload-form button:hover {
-                        background-color: #2980b9;
-                    }
-
-                    /* Table Styling */
-                    .table-responsive {
-                        max-width: 100%;
-                        margin: 30px auto;
-                        overflow-x: auto;
-                    }
-
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-
-                    table th, table td {
-                        padding: 12px;
-                        text-align: left;
-                        border: 1px solid #ddd;
-                    }
-
-                    table th {
-                        background-color: #34495e;
-                        color: white;
-                        font-size: 1.1em;
-                    }
-
-                    table td {
-                        background-color: #fff;
-                    }
-
-                    table tr:nth-child(even) {
-                        background-color: #f9f9f9;
-                    }
-
-                    table td img {
-                        border-radius: 50%;
-                    }
-
-                    /* Action Link Styling */
-                    a {
-                        color: #e74c3c;
-                        text-decoration: none;
-                        font-weight: bold;
-                    }
-
-                    a:hover {
-                        text-decoration: underline;
-                    }
-
-                    /* Image Styling */
-                    .faculty-img-sec {
-                        border-radius: 50%;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                        margin: 0 auto;
-                    }
-
-                    /* Responsive Design */
-                    @media (max-width: 768px) {
-                        .upload-form {
-                            width: 90%;
-                        }
-
-                        table th, table td {
-                            font-size: 0.9em;
-                        }
-
-                        .table-responsive {
-                            margin: 10px 0;
-                        }
-                    }
-                    /* Modal Background Overlay */
-                    .modal {
-                        display: none; /* Hidden by default */
-                        position: fixed; /* Stay in place */
-                        z-index: 1; /* Sit on top */
-                        left: 0;
-                        top: 0;
-                        width: 100%; /* Full width */
-                        height: 100%; /* Full height */
-                        background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-                        overflow: auto; /* Enable scroll if needed */
-                        padding-top: 60px; /* Position the modal slightly below the top */
-                    }
-
-                    /* Modal Content */
-                    .modal-content {
-                        background-color: #fff;
-                        margin: 5% auto; /* Center the modal */
-                        padding: 20px;
-                        border-radius: 8px;
-                        width: 80%; /* Width of the modal */
-                        max-width: 600px; /* Max width of the modal */
-                    }
-
-                    /* Close Button */
-                    .close {
-                        color: #aaa;
-                        float: right;
-                        font-size: 28px;
-                        font-weight: bold;
-                    }
-
-                    .close:hover,
-                    .close:focus {
-                        color: black;
-                        text-decoration: none;
-                        cursor: pointer;
-                    }
-
-                    /* Styles for the form */
-                    input, select, button {
-                        font-size: 1em;
-                        width: 100%;
-                        padding: 8px;
-                        margin: 10px 0;
-                        border: 1px solid #ddd;
-                        border-radius: 4px;
-                        box-sizing: border-box;
-                    }
-
-                    button {
-                        background-color: #3498db;
-                        color: white;
-                        padding: 12px 20px;
-                        border: none;
-                        border-radius: 4px;
-                        cursor: pointer;
-                    }
-
-                    button:hover {
-                        background-color: #2980b9;
-                    }
-
-    </style>
+<link rel="stylesheet" href="dep_faculty_styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.2/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- <div id="uploadfile" style="display: none;">
@@ -343,7 +148,7 @@ mysqli_close($con);
     <div class="modal-content">
        
         <h2>Upload Profile  <span class="close" style="color:red;text-align: right;" onclick="uploadimagefunction(1)">&times;</span></h2>
-        <form action="dep_faculty.php" method="POST" enctype="multipart/form-data">
+        <form action="dep_faculty.php" method="POST" enctype="multipart/form-data" class="upload-form">
             <input type="hidden" id="id" name="id">
             <label for="name">Name of the faculty:</label>
             <input type="text" id="name" name="name" required><br><br>
@@ -385,14 +190,56 @@ mysqli_close($con);
 </div>
 <!-- </div> -->
 <!-- Display Faculty Profiles -->
- <button class="btn btn-primary" onclick="uploadimagefunction(1)"> Upload New Faculty</button>  
+ <div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-sm-6">
+
+      
+ <button class="btn btn-primary" onclick="uploadimagefunction(1)"> <span style="font-weight: bold;font-size:large">+</span> Upload New Faculty</button>  
 
 
- <form action="dep_faculty.php"  method="GET" enctype="multipart/form-data">
- <label for="search">Faculty search:</label>
-            <input type="text" id="search" name="search">
-            <button type="submit">search</button>
- </form>
+ <!-- <form action="dep_faculty.php"  method="GET" enctype="multipart/form-data" class="searchform" >
+
+            <input type="text" id="search" name="search" placeholder="Search by name, qualification, designation, department, department_id"><br><br>
+            &nbsp;
+            <button type="submit" class="submit-button">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+ </form> -->
+ <!-- <form action="dep_faculty.php" method="GET" enctype="multipart/form-data" class="searchform" >
+   
+    <input type="text" id="search" name="search" placeholder="Search by name, qualification, designation, department, department_id" 
+           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"><br><br>
+
+    <button type="submit" class="submit-button">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+</form> -->
+<form action="dep_faculty.php" method="GET" enctype="multipart/form-data" class="searchform" onsubmit="return validateSearch()">
+    <!-- <label for="search">Faculty search:</label> -->
+    <input type="text" id="search" name="search" placeholder="Search by name, qualification, designation, department, department_id"
+           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"><br><br>
+    <button type="submit" class="submit-button">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+<br>
+    <!-- This is where the error message will be displayed if search input is empty -->
+    <p id="error-message" style="color: red; display: none;"></p>
+</form>
+<a href="dep_faculty.php"><i class="fa-solid fa-rotate-right" style="
+    font-size: xx-large;
+    margin-top: 2px; color: black;
+"></i></a>
+
+
+</div>
+    </div>
+ </div>
+
+
+
+
+
 
 <div class="committee_table_inn">
     <div class="table-responsive">
@@ -511,6 +358,29 @@ function editFaculty(id) {
         .catch(error => console.error('Error:', error));
 }
 </script>
+<script>
+    // JavaScript function to validate input before form submission
+    function validateSearch() {
+        var searchInput = document.getElementById('search').value.trim(); // Get the value of the search input
+        var errorMessage = document.getElementById('error-message');
+
+        if (searchInput === "") {
+            errorMessage.style.display = "block"; // Show error message
+            // document.getElementById('error-message').innerHTML = "Please give input to search.";
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Please give input to search!',
+                showConfirmButton: true
+            });
+            return false; // Prevent form submission
+        } else {
+            errorMessage.style.display = "none"; // Hide error message
+            return true; // Allow form submission
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.2/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
