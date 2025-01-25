@@ -1,0 +1,245 @@
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f9;
+margin: 0;
+padding: 0;
+color: #333;
+}
+@media (min-width: 768px) {
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 5%;
+        padding: 2%;
+        color: #333;
+        }
+    }
+h1 {
+text-align: center;
+margin-top: 30px;
+color: #2c3e50;
+}
+
+h2 {
+color: #34495e;
+font-size: 1.5em;
+}
+
+/* Upload Form Styling */
+.upload-form {
+max-width: 600px;
+margin: 20px 0px;
+padding: 20px;
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-form label {
+display: block;
+font-size: 1.1em;
+margin-bottom: 5px;
+color: #555;
+}
+
+.upload-form input[type="text"],
+.upload-form select,
+.upload-form input[type="file"] {
+width: 100%;
+padding: 8px;
+margin: 10px 0 20px;
+border: 1px solid #ddd;
+border-radius: 4px;
+box-sizing: border-box;
+font-size: 1em;
+}
+
+.upload-form button {
+background-color: #3498db;
+color: white;
+padding: 12px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 1.2em;
+width: 100%;
+}
+
+.upload-form button:hover {
+background-color: #2980b9;
+}
+
+/* Table Styling */
+.table-responsive {
+max-width: 100%;
+margin: 30px auto;
+overflow-x: auto;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+}
+
+table th, table td {
+padding: 12px;
+text-align: left;
+border: 1px solid #ddd;
+}
+
+table th {
+background-color: #34495e;
+color: white;
+font-size: 1.1em;
+}
+
+table td {
+background-color: #fff;
+}
+
+table tr:nth-child(even) {
+background-color: #f9f9f9;
+}
+
+table td img {
+border-radius: 50%;
+}
+
+/* Action Link Styling */
+a {
+color: #e74c3c;
+text-decoration: none;
+font-weight: bold;
+}
+
+a:hover {
+text-decoration: underline;
+}
+
+/* Image Styling */
+.faculty-img-sec {
+border-radius: 50%;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.upload-form {
+width: 100%;
+}
+
+table th, table td {
+font-size: 0.9em;
+}
+
+.table-responsive {
+margin: 10px 0;
+}
+}
+/* Modal Background Overlay */
+.modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+overflow: auto; /* Enable scroll if needed */
+padding-top: 60px; /* Position the modal slightly below the top */
+}
+
+/* Modal Content */
+.modal-content {
+background-color: #fff;
+margin: 5% auto; /* Center the modal */
+padding: 20px;
+border-radius: 8px;
+width: 80%; /* Width of the modal */
+max-width: 600px; /* Max width of the modal */
+}
+
+/* Close Button */
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+/* Styles for the form */
+upload-form:input, select, button {
+font-size: 1em;
+width: 100%;
+padding: 8px;
+margin: 0px;
+border: 1px solid #ddd;
+border-radius: 4px;
+box-sizing: border-box;
+}
+
+button {
+background-color: #3498db;
+color: white;
+/* padding: 12px 20px;   */
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #2980b9;
+}
+
+/* style="
+    position: relative;
+    display: inline-flex;
+    float: right;
+    justify-content: space-between;
+" */
+@media screen and (min-width: 998px) {
+  
+    .searchform{
+        position: relative;
+        display: inline-flex;
+        float: right;
+        justify-content: space-between;
+        height: 36px;
+    }
+}
+
+.searchform input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Style the submit button */
+.searchform button {
+    background-color: #4CAF50; /* Green background */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Style the icon inside the button */
+.searchform button i {
+    font-size: 20px; /* Size the icon */
+    color: white;
+}
+
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 100% !important;
+    }
+}
