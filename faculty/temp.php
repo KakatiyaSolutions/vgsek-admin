@@ -666,6 +666,7 @@ h1{
                 <input type="text" id="qualification" name="qualification" required><br><br>
                 <label for="designation">Designation:</label>
                 <input type="text" id="designation" name="designation" required><br><br>
+                
                 <label for="department">Department (B.Tech Branches):</label>
                 <select id="department" name="department" required>
                     <option value="">Select Department</option>
