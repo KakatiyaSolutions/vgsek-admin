@@ -146,7 +146,7 @@ mysqli_close($con);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- <script src="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
+<!--  <script s rc="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
 <!-- <script src="js/ckeditor.js"></script> -->
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     <meta charset="UTF-8">
