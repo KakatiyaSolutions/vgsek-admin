@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
         // Use MySQLi's send_long_data for large files (binary data)
         // Sends the image data
 
-        // Execute the query
+        // Execute the query and exit
         if ($stmt->execute()) {
             echo "Image uploaded and stored in database successfully!";
             // header("Location: dep_faculty_profile.html");
@@ -146,7 +146,7 @@ mysqli_close($con);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- <script src="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
+<!--  <script s rc="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
 <!-- <script src="js/ckeditor.js"></script> -->
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     <meta charset="UTF-8">
