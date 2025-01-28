@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
         // Use MySQLi's send_long_data for large files (binary data)
         // Sends the image data
 
-        // Execute the query
+        // Execute the query and exit
         if ($stmt->execute()) {
             echo "Image uploaded and stored in database successfully!";
             // header("Location: dep_faculty_profile.html");
