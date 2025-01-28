@@ -114,16 +114,66 @@ mysqli_close($con);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="container">
+
+            <!-- <div id="uploadfile" class="modal" style="display: none !important;">
+                    <div class="modal-content">
+
+                        <h2>Upload Profile <span class="close" style="color:red;text-align: right;"
+                                onclick="uploadimagefunction(1)">&times;</span></h2>
+                        <form action="dep_faculty.php" method="POST" enctype="multipart/form-data" class="upload-form">
+                            <input type="hidden" id="id" name="id">
+                            <label for="name">Name of the faculty:</label>
+                            <input type="text" id="name" name="name" required><br><br>
+                            <label for="qualification">Qualification:</label>
+                            <input type="text" id="qualification" name="qualification" required><br><br>
+                            <label for="designation">Designation:</label>
+                            <input type="text" id="designation" name="designation" required><br><br>
+                            <label for="department">Department (B.Tech Branches):</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="CSC">Computer Science</option>
+                                <option value="MEC">Mechanical Engineering</option>
+                                <option value="EEE">Electrical Engineering</option>
+                                <option value="CIV">Civil Engineering</option>
+                                <option value="ECE">Electronics and Communication</option>
+                                <option value="AI_ML">Artificial Intelligence & Machine Learning</option>
+                                <option value="DSE">Data Science Engineering</option>
+                            </select><br><br>
+
+                            Department ID Dropdown
+                            <label for="department_id">Department ID:</label>
+                            <select id="department_id" name="department_id" required>
+                                <option value="">Select Department ID</option>
+                                <option value="1">CSE</option>
+                                <option value="2">EEE</option>
+                                <option value="3">ECE</option>
+                                <option value="4">MEC</option>
+                                <option value="5">CIV</option>
+                                <option value="6">AI & ML</option>
+                                <option value="7">DS</option>
+                            </select><br><br>
+
+                            <label for="image">Faculty Image:</label>
+                            <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+                            <button type="submit">Upload Image</button>
+                        </form>
+                    </div>
+                </div> -->
+
+    <di+v class="container">
         <!-- Search Form -->
         <div class="my-3">
-            <form id="search-form" onsubmit="handleSearchSubmit(event)" method="GET" action="dep_faculty.php">
+            <form id="search-form" onsubmit="handleSearchSubmit(event)" method="GET" action="temp2.php">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="search" name="search" placeholder="Search by Name, Qualification, Designation or Department">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary w-100" onclick="uploadimagefunction(2)"><span>+</span>Add</button>
                     </div>
                 </div>
             </form>
@@ -207,11 +257,11 @@ mysqli_close($con);
                 </form>
             </div>
         </div>
-    </div>
+    </di+v>
 
     <script>
         function editFaculty(id) {
-            fetch(`dep_faculty.php?id=${id}`)
+            fetch(`update_dp_faculty.php?id=${id}`)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('id').value = data.id;
@@ -242,13 +292,34 @@ mysqli_close($con);
         function handleSearchSubmit(event) {
             event.preventDefault();
             const searchQuery = document.getElementById('search').value;
-            window.location.href = `dep_faculty.php?search=${searchQuery}&page=1`;
+            window.location.href = `temp2.php?search=${searchQuery}&page=1`;
         }
 
         function uploadimagefunction(show) {
             const uploadFileDiv = document.getElementById('uploadfile');
             uploadFileDiv.style.display = show ? 'block' : 'none';
         }
+
+        // function uploadimagefunction(id) {
+        //     if (modal.style.display === "block") {
+        //         modal.style.display = "none"; // If it's already open, close it
+        //     } else {
+        //         modal.style.display = "block"; // If it's closed, open it
+        //     }
+        //     if (id !== 2) {
+        //         document.getElementById('id').value = '';
+        //         document.getElementById('name').value = '';
+        //         document.getElementById('qualification').value = '';
+        //         document.getElementById('designation').value = '';
+        //         document.getElementById('department').value = '';
+        //         document.getElementById('department_id').value = '';
+        //     }
+        // }
+        // Close the modal when clicking the "X" button
+        // closeBtn.onclick = function () {
+        //     modal.style.display = "none";
+        // }
     </script>
+    
 </body>
 </html>
