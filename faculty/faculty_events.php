@@ -4,35 +4,31 @@ $con = mysqli_connect('srv1328.hstgr.io', 'u629694569_vcpkacin_web', 'Kakatiya@1
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$active_department = isset($_GET['department']) ? $_GET['department'] :         'EEE';
-$department = isset($_GET['department']) ? $_GET['department'] : 'DS'; // Default to 'CSE'
+
+$department = isset($_GET['department']) ? $_GET['department'] : 'DS'; // Default to 'EEE'
 
 // Fetch data for the selected department
-$query = "SELECT sno, po, department,department_name, description, status, vision, mission, peo, po_pso,  advisory_board , achivements, board_of_studies
-          FROM faculty_event WHERE department_name = ?";
+$query = "SELECT sno, title, department, department_name, description, status
+          FROM faculty_event2 WHERE department_name LIKE ?";
+$department_with_wildcards = "%" . $department . "%"; 
 $stmt = $con->prepare($query);
-$stmt->bind_param("s", $department);
+$stmt->bind_param("s", $department_with_wildcards);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Initialize variables
-$department = $department_name = $vision = $mission = $description = $peo = $po = $popso = $board_of_studies = $achivements = $advisory = "";
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $department = $row['department'];
-    $department_name = $row['department_name'];
-    $vision = htmlspecialchars_decode($row['vision']);
-    $mission = htmlspecialchars_decode($row['mission']);
-    $description = htmlspecialchars_decode($row['description']);
-    $peo = htmlspecialchars_decode($row['peo']);
-    $po = htmlspecialchars_decode($row['po']);
-    $popso = htmlspecialchars_decode($row['po_pso']);
-    $advisory = htmlspecialchars_decode($row['advisory_board']);
-    // $board_of_studies = htmlspecialchars_decode($row['board_of_studies']);
-    // $achivements = htmlspecialchars_decode($row['achivements']);
-    $achivements = isset($row['achivements']) ? htmlspecialchars_decode($row['achivements']) : "";
-$board_of_studies = isset($row['board_of_studies']) ? htmlspecialchars_decode($row['board_of_studies']) : "";
+// Initialize counter for EEE and container for forms
+$eee_count = 0;
+$forms = [];
 
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Count how many times "EEE" appears
+        if (strpos($row['department_name'], $department) !== false) {
+            $eee_count++;
+            // Store the form data for each record where "EEE" appears
+            $forms[] = $row;
+        }
+    }
 }
 
 $stmt->close();
@@ -47,270 +43,203 @@ mysqli_close($con);
     <title>Faculty Events</title>
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     <meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-<title>VAAGESWARI COLLEG OF ENGINEERING</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>VAAGESWARI COLLEGE OF ENGINEERING</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-<!-- General CSS Files -->
-<link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<!-- CSS Libraries -->
-<link rel="stylesheet" href="assets/modules/jqvmap/dist/jqvmap.min.css">
-<link rel="stylesheet" href="assets/modules/summernote/summernote-bs4.css">
-<link rel="stylesheet" href="assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="stylesheet" href="assets/css/components.min.css">
+    <style>
+    .hidden-textarea {
+        display: none;
+        width: 100%;
+        height: 100px;
+    }
 
-<!-- Template CSS -->
-<link rel="stylesheet" href="assets/css/style.min.css">
-<link rel="stylesheet" href="assets/css/components.min.css">
+    .edit-icon {
+        cursor: pointer;
+        color: blue;
+        font-size: 18px;
+        margin-left: 5px;
+    }
+
+    .edit-icon:hover {
+        color: darkblue;
+    }
+</style>
+
 </head>
 <body>
    
 <div class="main-content">
-            <section class="section">
-            <h1>Update Department Details of <?php echo htmlspecialchars($department_name); ?></h1>
-             <form action="update_faculty_event.php?department=<?php echo urlencode($department_name); ?>" method="POST">
-        <label for="description">Description:</label><br>
-        <textarea name="description" id="description"><?php echo $description; ?></textarea><br><br>
+    <section class="section">
+        <h1>Update Department Details of <?php echo htmlspecialchars($department); ?></h1>
 
-        <label for="vision">Vision:</label><br>
-        <textarea name="vision" id="vision"><?php echo $vision; ?></textarea><br><br>
+        <!-- Display how many times "EEE" appears -->
+        <p><strong>EEE is found <?php echo $eee_count; ?> times in the department records.</strong></p>
 
-        <label for="mission">Mission:</label><br>
-        <textarea name="mission" id="mission"><?php echo $mission; ?></textarea><br><br>
+        <!-- Render a form for each row that contains "EEE" -->
+        <?php foreach ($forms as $index => $form) : ?>
+            <form action="update_faculty_event.php?department=<?php echo urlencode($form['department_name']); ?>" method="POST">
+            <input type="hidden" name="sno" id="sno" value="<?php echo $form['sno']; ?>">    
+           
+            <!-- Title Field with Edit Functionality -->
+            <label for="title-<?php echo $index; ?>"><?php echo htmlspecialchars(strip_tags($form['title'])); ?></label>
+            <span class="edit-icon" onclick="toggleEdit('title-<?php echo $index; ?>')">&#9998;</span><br>
 
-        <label for="peo">Program Educational Objectives (PEO):</label><br>
-        <textarea name="peo" id="peo"><?php echo $peo; ?></textarea><br><br>
+            <!-- Initially hidden Textarea for Title -->
+            <textarea name="title" id="title-<?php echo $index; ?>" class="hidden-textarea"><?php echo htmlspecialchars($form['title']); ?></textarea><br><br>
 
-        <label for="po">Program Outcomes (PO) </label><br>
-        <textarea name="po" id="po"><?php echo $po; ?></textarea><br><br>
+            <!-- Description Field with CKEditor Initialized from the Start -->
+            <!-- <label for="description-<?php echo $index; ?>">Description:</label><br> -->
+            <textarea name="description" id="description-<?php echo $index; ?>"><?php echo htmlspecialchars($form['description']); ?></textarea><br><br>
 
-        <label for="popso"> Program Specific Outcomes (PSO):</label><br>
-        <textarea name="popso" id="popso"><?php echo $popso; ?></textarea><br><br>
-
-        <label for="board_of_studies">Board Of Studies:</label><br>
-        <textarea name="board_of_studies" id="board_of_studies"><?php echo $board_of_studies; ?></textarea><br><br>
-        
-        <label for="advisory">Advisory Board:</label><br>
-        <textarea name="advisory" id="advisory"><?php echo $advisory; ?></textarea><br><br>
-        
-        <label for="achivements">Achivements:</label><br>
-        <textarea name="achivements" id="achivements"><?php echo $achivements; ?></textarea><br><br>
-        
-        <input type="hidden" name="<?php echo $department_name; ?>" id="<?php echo $department_name; ?>" value="<?php echo $department_name; ?>">
-        <button type="submit" class="btnsubmi "  style="display: block; margin: 0 auto;">Update</button>
+            <input type="hidden" name="department_name" value="<?php echo $form['department_name']; ?>">
+            <button type="submit" class="btnsubmit" style="display: block; margin: 0 auto;">Update</button>
             </form>
-            </section>
-        </div>
+            <br><hr><br>
+        <?php endforeach; ?>
+        <div id="form-container">
+    <!-- Existing rows will be inserted here -->
+</div>
+          <!-- Button to Add New Row -->
+            <button class="btn btn-success" onclick="addNewRow()">Add New Row</button>
+    </section>
+</div>
 
-        <!-- Start app Footer part -->
-        <footer class="main-footer">
-            <div class="footer-left">
-                 <div class="bullet"></div>  <a href="https://kakatiyasolutions.in/vageshwari_clg/" target="_blank">VAAGESWARI COLLEGE OF ENGINEERING</a>
-            </div>
-            <div class="footer-right">
-                <div class="bullet"></div>Design & Developed By  <a href="https://kakatiyasolutions.com/" target="_blank">Kakatiya Slutions</a>
-            </div>
-        </footer>
-    
+<!-- Footer -->
+<footer class="main-footer">
+    <div class="footer-left">
+        <div class="bullet"></div>  
+        <a href="https://kakatiyasolutions.in/vageshwari_clg/" target="_blank">VAAGESWARI COLLEGE OF ENGINEERING</a>
     </div>
+    <div class="footer-right">
+        <div class="bullet"></div>Design & Developed By  
+        <a href="https://kakatiyasolutions.com/" target="_blank">Kakatiya Solutions</a>
+    </div>
+</footer>
 
-
-<!-- script goes here-->
-<script>
-//     document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) {
-//     item.addEventListener('click', function(e) {
-//         var submenu = this.nextElementSibling;
-//         if (submenu && submenu.classList.contains('submenu')) {
-//             submenu.style.display = (submenu.style.display === 'block' ? 'none' : 'block');
-//         }
-//     });
-// });
-document.querySelectorAll('.sidebar-menu .dropdown > a').forEach(function(item) {
-    item.addEventListener('click', function(e) {
-        // Toggle the 'open' class for the dropdown
-        var parentDropdown = this.parentElement;
-        parentDropdown.classList.toggle('open');
-        
-        // Toggle the display of the submenu
-        var submenu = this.nextElementSibling;
-        if (submenu && submenu.classList.contains('submenu')) {
-            submenu.style.display = (submenu.style.display === 'block' ? 'none' : 'block');
-        }
-    });
-});
-
-
-</script>
-    <script src="assets/bundles/lib.vendor.bundle.js"></script>
+<script src="assets/bundles/lib.vendor.bundle.js"></script>
 <script src="js/CodiePie.js"></script>
-
-<!-- JS Libraies -->
-<script src="assets/modules/jquery.sparkline.min.js"></script>
-<script src="assets/modules/chart.min.js"></script>
-<script src="assets/modules/owlcarousel2/dist/owl.carousel.min.js"></script>
-<script src="assets/modules/summernote/summernote-bs4.js"></script>
-<script src="assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
-
-<!-- Page Specific JS File -->
-<script src="js/page/index.js"></script>
-
-<!-- Template JS File -->
-<script src="js/scripts.js"></script>
-<script src="js/custom.js"></script>
-<!-- <script src="js/ckeditor.js"></script> -->
-
-<!-- // <script>
-//     const editorIds = ['description', 'vision', 'mission', 'peo', 'popso', 'advisory', 'po','board_of_studies', 'achivements'];
-//     editorIds.forEach(id => {
-//         ClassicEditor.create(document.querySelector('#' + id), {
-//             // toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable'],
-//             toolbar: [
-//                 'bold', 
-//                 'italic', 
-//                 'link', 
-//                 'bulletedList', 
-//                 'numberedList', 
-//                 'blockQuote', 
-//                 'insertTable', 
-//                 'outdent', 
-//                 'indent', 
-//                 'todoList', // Adds task list support
-//                 'listStyle', // Allows for different list styles
-//                 'alignment', // Adds text alignment controls
-//                 'fontSize', // Allows changing the font size
-//                 'fontColor', // Custom text color options
-//                 'highlight', // Text highlighting option
-//                 'fontFamily', // Allows font family selection
-//                 'underline', // Underlines text
-//                 'strikethrough', // Strikes through text
-//                 'subscript', // Adds subscript formatting
-//                 'superscript', // Adds superscript formatting
-//                 'code', // Adds inline code formatting
-//                 'insertImage', // Image insertion support
-//                 'insertVideo', // Video embedding
-//                 'blockquote', // Blockquote option for citing sources
-//                 'clearFormatting', // Clears all text formatting
-//             ],
-              
-              
-//             table: {
-//                 contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties'],
-//                 defaultProperties: {
-//                     table: {
-//                         classes: 'table table-bordered table-striped' // Set the desired default classes
-//                     }
-//                 }
-//             },
-//             htmlSupport: {
-//                 allow: [
-//                     { name: 'table', attributes: true, classes: true, styles: true },
-//                     { name: 'thead', attributes: true, classes: true, styles: true },
-//                     { name: 'tbody', attributes: true, classes: true, styles: true },
-//                     { name: 'tr', attributes: true, classes: true, styles: true },
-//                     { name: 'td', attributes: true, classes: true, styles: true },
-//                     { name: 'th', attributes: true, classes: true, styles: true }
-//                 ],
-//                 disallow: [
-//                 {
-//                     name: 'figure',
-//                     attributes: true,
-//                     classes: true,
-//                     styles: true
-//                 }
-//             ]
-//             }
-//         }).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
-//     });
-// </script> -->
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script> -->
-<!-- <script src="my-ckeditor-porject/ckeditor/ckeditor.js"></script> -->
-<!-- <script src="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
-<!-- <script src="my-ckeditor-project/ckeditor/ckeditor.js"></script> -->
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-     console.log(window.ClassicEditor); 
-    const editorIds = 
-    ['description', 'vision', 'mission', 'peo', 'popso', 'advisory', 'po', 'board_of_studies', 'achivements'];
-    // const editorIds = ['selectAll', 'undo', 'redo', 'bold', 'italic', 'blockQuote', 'link', 'ckfinder', 'uploadImage', 'imageUpload', 'heading', 'imageTextAlternative', 'toggleImageCaption', 'imageStyle:inline', 'imageStyle:alignLeft', 'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:alignBlockLeft', 'imageStyle:alignBlockRight', 'imageStyle:block', 'imageStyle:side', 'imageStyle:wrapText', 'imageStyle:breakText', 'indent', 'outdent', 'numberedList', 'bulletedList', 'mediaEmbed', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells'];
-    editorIds.forEach(id => {
-        ClassicEditor.create(document.querySelector('#' + id), {
-            // toolbar: [
-            //     'bold', 
-            //     'italic', 
-            //     'link', 
-            //     'bulletedList', 
-            //     'numberedList', 
-            //     'blockQuote', 
-            //     'insertTable', 
-            //     'outdent', 
-            //     'indent', 
-            //     'todoList', // Adds task list support
-            //     'listStyle', // Allows for different list styles
-            //     'alignment', // Adds text alignment controls
-            //     'fontSize', // Allows changing the font size
-            //     'fontColor', // Custom text color options
-            //     'highlight', // Text highlighting option
-            //     'fontFamily', // Allows font family selection
-            //     'underline', // Underlines text
-            //     'strikethrough', // Strikes through text
-            //     'subscript', // Adds subscript formatting
-            //     'superscript', // Adds superscript formatting
-            //     'code', // Adds inline code formatting
-            //     'insertImage', // Image insertion support
-            //     'insertVideo', // Video embedding
-            //     'blockquote', // Blockquote option for citing sources
-            //     'clearFormatting', // Clears all text formatting
-            // ],
-            toolbar: ['selectAll', 'undo', 'redo', 'bold', 'italic', 'blockQuote', 'link', 'ckfinder', 'uploadImage', 'imageUpload', 'heading', 'imageTextAlternative', 'toggleImageCaption', 'imageStyle:inline', 'imageStyle:alignLeft', 'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:alignBlockLeft', 'imageStyle:alignBlockRight', 'imageStyle:block', 'imageStyle:side', 'imageStyle:wrapText', 'imageStyle:breakText', 'indent', 'outdent', 'numberedList', 'bulletedList', 'mediaEmbed', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells'],
+    // Initialize CKEditor for Description field as soon as the page loads
+    <?php foreach ($forms as $index => $form) : ?>
+        ClassicEditor.create(document.querySelector('#description-<?php echo $index; ?>'))
+            .catch(error => console.error(`Error initializing CKEditor for description-<?php echo $index; ?>:`, error));
+    <?php endforeach; ?>
 
-            // Configure Font Plugin
-            fontSize: {
-                options: [
-                    8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
-                ]
-            },
-            fontFamily: {
-                options: [
-                    'default', 'Arial', 'Courier New', 'Georgia', 'Lucida Sans Unicode', 'Tahoma', 'Times New Roman', 'Verdana'
-                ]
-            },
+    // Initialize CKEditor only for the Title textarea when it's revealed
+    // let editors = {};
 
-            table: {
-                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties'],
-                defaultProperties: {
-                    table: {
-                        classes: 'table table-bordered table-striped' // Set the desired default classes
-                    }
-                }
-            },
+    // function toggleEdit(textareaId) {
+    //     var textarea = document.getElementById(textareaId);
+    //     if (textarea.style.display === "none" || textarea.style.display === "") {
+    //         textarea.style.display = "block";  // Show textarea
+            
+    //         // Initialize CKEditor for the title textarea only if it's not already initialized
+    //         if (!editors[textareaId]) {
+    //             ClassicEditor.create(textarea)
+    //                 .then(editor => {
+    //                     editors[textareaId] = editor; // Save the instance to prevent re-initialization
+    //                 })
+    //                 .catch(error => console.error(`Error initializing CKEditor for ${textareaId}:`, error));
+    //         }
+    //     } else {
+    //         textarea.style.display = "none";  // Hide textarea
+    //     }
+    // }
+    // Object to keep track of initialized editors to avoid re-initialization
+let editors = {};
 
-            htmlSupport: {
-                allow: [
-                    { name: 'table', attributes: true, classes: true, styles: true },
-                    { name: 'thead', attributes: true, classes: true, styles: true },
-                    { name: 'tbody', attributes: true, classes: true, styles: true },
-                    { name: 'tr', attributes: true, classes: true, styles: true },
-                    { name: 'td', attributes: true, classes: true, styles: true },
-                    { name: 'th', attributes: true, classes: true, styles: true }
-                ],
-                disallow: [
-                    {
-                        name: 'figure',
-                        attributes: true,
-                        classes: true,
-                        styles: true
-                    }
-                ]
-            }
-        }).then(editor => {
-    // List all available component names in the editor's UI
-    // console.log(Array.from(editor.ui.componentFactory.names()));
-}).catch(error => console.error(`Error initializing CKEditor for #${id}:`, error));
-    });
+function toggleEdit(textareaId) {
+    var textarea = document.getElementById(textareaId);
+
+    // If the textarea is currently hidden or has no display set, show it
+    if (textarea.style.display === "none" || textarea.style.display === "") {
+        textarea.style.display = "block";  // Show the textarea
+
+        // Initialize CKEditor for the title textarea only if it's not already initialized
+        if (!editors[textareaId]) {
+            ClassicEditor.create(textarea)
+                .then(editor => {
+                    editors[textareaId] = editor; // Save the instance to prevent re-initialization
+                })
+                .catch(error => console.error(`Error initializing CKEditor for ${textareaId}:`, error));
+        }
+    } else {
+        // If textarea is already shown, hide it and destroy CKEditor instance
+        textarea.style.display = "none";  // Hide the textarea
+
+        // Destroy CKEditor instance when the textarea is hidden
+        if (editors[textareaId]) {
+            editors[textareaId].destroy()
+                .then(() => {
+                    delete editors[textareaId]; // Remove the editor instance from the tracker
+                })
+                .catch(error => console.error(`Error destroying CKEditor for ${textareaId}:`, error));
+        }
+    }
+}
+
+
+function addNewRow() {
+            const newRowForm = `
+                <form class="new-row-form" id="new-row-form">
+                    <input type="hidden" name="sno" id="new-sno" value=""> 
+
+                    <label for="new-title">Title:</label><br>
+                    <textarea name="title" id="new-title" class="hidden-textarea"></textarea><br><br>
+
+                    <label for="new-description">Description:</label><br>
+                    <textarea name="description" id="new-description"></textarea><br><br>
+
+                    <button type="button" onclick="saveNewRow()">Save New Row</button>
+                </form>
+                <br><hr><br>
+            `;
+            document.getElementById('form-container').insertAdjacentHTML('beforeend', newRowForm);
+
+            // Initialize CKEditor for new description field
+            ClassicEditor.create(document.querySelector('#new-description'))
+                .catch(error => console.error(`Error initializing CKEditor for new-description:`, error));
+            ClassicEditor.create(document.querySelector('#new-title'))
+                .catch(error => console.error(`Error initializing CKEditor for new-title:`, error));
+        }
+
+        // Save the new row via AJAX
+        function saveNewRow() {
+            const department = '<?php echo urlencode($department); ?>';
+    const title = document.querySelector('#new-title').value;
+    const description = document.querySelector('#new-description').value;
+
+    const data = new FormData();
+    data.append('title', title);
+    data.append('description', description);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'update_faculty_event.php?department=' + department, true);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            alert('New row added successfully!');
+            // Optionally reload the page or update UI to show the new row
+        } else {
+            alert('Error adding new row: ' + xhr.status + " " + xhr.statusText);
+            console.error('Error details:', xhr.responseText);
+        }
+    };
+
+    xhr.send(data);
+}
 </script>
+
 </body>
 </html>
