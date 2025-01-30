@@ -1,0 +1,140 @@
+/* styles.css */
+
+/* General body and page styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #5D5C61;
+}
+
+section {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+form {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+textarea.hidden-textarea {
+    display: none;
+}
+
+button.btnsubmit {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s ease;
+}
+
+button.btnsubmit:hover {
+    background-color: #218838;
+}
+
+/* Edit icon style */
+.edit-icon {
+    color: #007bff;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.edit-icon:hover {
+    color: #0056b3;
+}
+
+/* Footer styles */
+footer.main-footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+footer.main-footer .footer-left, .footer-right {
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+footer.main-footer .footer-left .bullet,
+footer.main-footer .footer-right .bullet {
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+/* Button Styles */
+button.btn-success {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-success:hover {
+    background-color: #0056b3;
+}
+
+hr {
+    border-top: 1px solid #e4e4e4;
+    margin: 20px 0;
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+    }
+
+    section {
+        width: 100%;
+        padding: 15px;
+    }
+}

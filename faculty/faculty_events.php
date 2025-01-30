@@ -4,6 +4,7 @@ $con = mysqli_connect('srv1328.hstgr.io', 'u629694569_vcpkacin_web', 'Kakatiya@1
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
+mysqli_set_charset($con, 'utf8mb4');
 
 $department = isset($_GET['department']) ? $_GET['department'] : 'CSE'; // Default to 'DS'
 
@@ -41,8 +42,9 @@ mysqli_close($con);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faculty Events</title>
+    <link rel="stylesheet" href="faculty.css"> <!-- Link to external CSS file -->
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-    <meta charset="UTF-8">
+    <!-- <meta charset="UTF-8"> -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -80,8 +82,8 @@ mysqli_close($con);
         <?php foreach ($forms as $index => $form) : ?>
             <form action="update_faculty_event.php?department=<?php echo urlencode($form['department_name']); ?>" method="POST">
             <input type="hidden" name="sno" id="sno" value="<?php echo $form['sno']; ?>">    
-
-            <label for="title-<?php echo $index; ?>"><?php echo htmlspecialchars(strip_tags($form['title']. ' - ' . htmlspecialchars($form['sno']))); ?></label>
+<!-- . '-' . htmlspecialchars($form['sno']) -->
+            <label for="title-<?php echo $index; ?>"><?php echo htmlspecialchars(strip_tags($form['title'])); ?></label>
             <span class="edit-icon" onclick="toggleEdit('title-<?php echo $index; ?>')">&#9998;</span><br>
             <textarea name="title" id="title-<?php echo $index; ?>" class="hidden-textarea"><?php echo htmlspecialchars($form['title']); ?></textarea><br><br>
 

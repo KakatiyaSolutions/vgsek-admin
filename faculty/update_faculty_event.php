@@ -4,6 +4,7 @@ $con = mysqli_connect('srv1328.hstgr.io', 'u629694569_vcpkacin_web', 'Kakatiya@1
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
+mysqli_set_charset($con, 'utf8mb4');
 
 $department = isset($_GET['department']) ? $_GET['department'] : 'Default_Department'; // Replace with your default value
 
