@@ -69,6 +69,9 @@ else if (isset($_POST['title']) && isset($_POST['description'])) {
     $title = mysqli_real_escape_string($con, $title);
     $description = mysqli_real_escape_string($con, $description);
 
+
+    // $description = REPLACE(REPLACE(description, '&lt;', '<'), '&gt;', '>');
+    $description = str_replace(['&lt;', '&gt;'], ['<', '>'], $description);
     // Insert a new record into the database
     $query = "INSERT INTO faculty_event2 (department, department_name, status, title, description) 
               VALUES ('$department', '$department', '1', '$title', '$description')";
