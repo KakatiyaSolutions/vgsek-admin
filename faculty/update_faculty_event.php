@@ -5,16 +5,25 @@ if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 mysqli_set_charset($con, 'utf8mb4');
-
+if (!mysqli_set_charset($con, 'utf8mb4')) {
+    die("Error setting charset: " . mysqli_error($con));
+}
 $department = isset($_GET['department']) ? $_GET['department'] : 'Default_Department'; // Replace with your default value
 
 echo "The department name is: " . htmlspecialchars($department);  
 
 // Function to add classes to <table> tags
 function add_table_classes($content) {
+    // $doc = new DOMDocument();
+    // libxml_use_internal_errors(true);
+    // $doc->loadHTML('<div>' . $content . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD); // Wrap content to avoid errors
+    
     $doc = new DOMDocument();
     libxml_use_internal_errors(true);
-    $doc->loadHTML('<div>' . $content . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD); // Wrap content to avoid errors
+    // Enforce UTF-8
+    $content = '<?xml encoding="UTF-8"><div>' . $content . '</div>';
+    $doc->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
 
     $tables = $doc->getElementsByTagName('table');
 
@@ -45,6 +54,7 @@ if (isset($_POST['sno'])) {
     $description = mysqli_real_escape_string($con, $description);
     $title = mysqli_real_escape_string($con, $title);
 
+    $description = str_replace(['&lt;', '&gt;'], ['<', '>'], $description);
     // Update the database for the existing record
     $query = "UPDATE faculty_event2 
               SET description = '$description', 
