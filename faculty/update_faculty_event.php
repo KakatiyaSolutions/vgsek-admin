@@ -32,7 +32,11 @@ function add_table_classes($content) {
         $classAttribute .= ' table table-bordered table-striped'; // Add the required classes
         $table->setAttribute('class', $classAttribute);
     }
-
+    // Add target="_blank" to all <a> links in the content
+    $links = $doc->getElementsByTagName('a');
+    foreach ($links as $link) {
+        $link->setAttribute('target', '_blank');
+    }
     return $doc->saveHTML($doc->documentElement);
 }
 

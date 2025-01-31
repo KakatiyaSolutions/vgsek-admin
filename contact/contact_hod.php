@@ -258,7 +258,7 @@ mysqli_close($con);
                     <label for="department">Department (B.Tech Branches):</label>
                 <select id="department" name="department" required>
                     <option value="">Select Department</option>
-                    <option value="CSC">Computer Science</option>
+                    <option value="CSE">Computer Science</option>
                     <option value="MEC">Mechanical Engineering</option>
                     <option value="EEE">Electrical Engineering</option>
                     <option value="CIV">Civil Engineering</option>

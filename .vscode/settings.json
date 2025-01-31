@@ -1,0 +1,18 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "srv1328.hstgr.io",
+            "port": 3306,
+            "driver": "MySQL",
+            "database": "u629694569_vcpkacin_web",
+            "username": "u629694569_vcpkacin_web",
+            "password": "Kakatiya@1243",
+            "name": "vgsek-admin"
+        }
+    ]
+}
